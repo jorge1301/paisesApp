@@ -9,9 +9,8 @@ import { PaisService } from '../../services/pais.service';
   ]
 })
 export class RegionComponent implements OnInit {
-
+  regiones: string[] = ['africa', 'americas', 'asia', 'europe', 'oceania'];
   termino: string = '';
-  existError: boolean = false;
   listaPaises: Country[] = [];
 
   constructor(private paisService: PaisService) { }
@@ -20,20 +19,18 @@ export class RegionComponent implements OnInit {
   }
 
   buscarTermino(termino: string) {
-    this.existError = false;
+    if(this.termino === termino) {return;};
     this.termino = termino;
     this.paisService.buscarRegion(this.termino)
       .subscribe(paises => {
         this.listaPaises = paises;
       }, (err) => {
-        this.existError = true;
         this.listaPaises = [];
       })
   }
 
-  sugerencias(termino: string) {
-    this.existError = false;
-    this.termino = termino;
+  getClaseCSS(region: string): string {
+    return (region === this.termino) ? 'btn btn-primary' : 'btn btn-outline-primary';
   }
 
 }

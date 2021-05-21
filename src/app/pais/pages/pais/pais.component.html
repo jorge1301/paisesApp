@@ -9,7 +9,24 @@
     ></app-pais-input>
   </div>
 </div>
-<hr />
+
+<ul *ngIf="mostrarSugerencias" class="list-group">
+  <li
+    *ngFor="let pais of paisesSugeridos"
+    class="list-group-item list-group-item-action"
+  >
+    <a class="nav-link" [routerLink]="['/pais', pais.alpha2Code]">{{
+      pais.name
+    }}</a>
+  </li>
+  <li
+    (click)="buscarTermino(termino)"
+    class="list-group-item list-group-item-action"
+  >
+    <a class="nav-link"> Buscar "{{ termino | titlecase }}"</a>
+  </li>
+</ul>
+
 <div *ngIf="existError" class="alert alert-danger">
   No se encontro el término {{ termino }}
 </div>
